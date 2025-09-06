@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy First Anniversary!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .shooting-star {
+            --trail-length: 150px;
+
+            position: fixed;
+            width: var(--trail-length);
+            height: 3px;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 60%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+            transform-origin: left center;
+            filter: blur(1px);
+            opacity: 0.95;
+            transition: transform 0.3s ease-out, width 0.2s ease-in-out, filter 0.2s ease-in-out, opacity 0.2s ease-in-out;
+            box-shadow: 0 0 8px rgba(255,255,255,0.8);
+        }
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -2px;
+            transform: translate(0, -50%);
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 15px 4px white, 0 0 30px 8px rgba(255,255,255,0.5);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1.2); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+        }
+        .star {
+            position: absolute;
+            background: white;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: twinkle 2s ease-in-out infinite;
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        .sparkling {
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        .bg-gradient-animate {
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #ff69b4);
+            background-size: 200% 200%;
+            animation: gradient 10s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-animate min-h-screen flex items-center justify-center p-4" id="mainBody">
+    <div class="max-w-2xl mx-auto text-center">
+        <h1 class="text-6xl font-bold text-white mb-8 floating transition-all duration-300 ease-in-out transform hover:scale-110 hover:text-pink-200 cursor-default">Happy First Anniversary!</h1>
+        <p class="text-2xl text-white mb-12 sparkling">Dear Romse Didi & Dear Jiju ❤️</p>
+        
+        <button id="wishBtn" class="transform hover:scale-110 transition-transform duration-300 bg-white text-pink-500 font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl text-xl focus:outline-none">
+            Grab Your Wish ✨
+        </button>
+
+        <!-- Popup Modal -->
+        <div id="wishModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg p-8 max-w-lg w-full transform transition-transform duration-300 scale-95 hover:scale-100">
+                <h2 class="text-3xl font-bold text-pink-500 mb-4">With Love ❤️</h2>
+                <p class="text-gray-700 text-lg mb-6">
+                    On this special day, I want to wish you and Jiju a lifetime of love, joy, and beautiful moments together. May your love grow stronger with each passing day, and may your journey be filled with endless happiness and wonderful adventures.
+                </p>
+                <button id="closeBtn" class="bg-pink-500 text-white font-bold py-2 px-6 rounded-full hover:bg-pink-600 transition-colors duration-300">
+                    Close 
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed inset-0 pointer-events-none">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="star h-3 w-3" style="top: 20%; left: 30%; animation-delay: 0s;"></div>
+            <div class="star h-2 w-2" style="top: 60%; left: 50%; animation-delay: 0.3s;"></div>
+            <div class="star h-4 w-4" style="top: 80%; left: 20%; animation-delay: 0.6s;"></div>
+            <div class="star h-3 w-3" style="top: 40%; left: 80%; animation-delay: 0.9s;"></div>
+            <div class="star h-2 w-2" style="top: 10%; left: 70%; animation-delay: 1.2s;"></div>
+            <div class="star h-3 w-3" style="top: 30%; left: 90%; animation-delay: 1.5s;"></div>
+            <div class="star h-2 w-2" style="top: 70%; left: 10%; animation-delay: 1.8s;"></div>
+            <div class="star h-4 w-4" style="top: 15%; left: 45%; animation-delay: 2.1s;"></div>
+            <div class="star h-3 w-3" style="top: 85%; left: 75%; animation-delay: 2.4s;"></div>
+            <div class="star h-2 w-2" style="top: 25%; left: 15%; animation-delay: 2.7s;"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
