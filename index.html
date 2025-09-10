@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,32 +6,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy First Anniversary!</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         .shooting-star {
             --trail-length: 150px;
-
             position: fixed;
             width: var(--trail-length);
-            height: 3px;
-            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 60%, rgba(255,255,255,0) 100%);
+            height: 4px;
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.3) 30%,
+                rgba(255,255,255,1) 60%, 
+                rgba(255,255,255,0.3) 80%,
+                rgba(255,255,255,0) 100%);
             pointer-events: none;
             transform-origin: left center;
-            filter: blur(1px);
+            filter: blur(0.5px);
             opacity: 0.95;
-            transition: transform 0.3s ease-out, width 0.2s ease-in-out, filter 0.2s ease-in-out, opacity 0.2s ease-in-out;
-            box-shadow: 0 0 8px rgba(255,255,255,0.8);
+            transition: all 0.2s ease-out;
+            box-shadow: 
+                0 0 10px rgba(255,255,255,0.8),
+                0 0 20px rgba(255,255,255,0.4);
         }
         .shooting-star::after {
             content: '';
             position: absolute;
             top: 50%;
-            right: -2px;
+            right: -3px;
             transform: translate(0, -50%);
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             background: white;
             border-radius: 50%;
-            box-shadow: 0 0 15px 4px white, 0 0 30px 8px rgba(255,255,255,0.5);
+            box-shadow: 
+                0 0 15px 4px white,
+                0 0 30px 8px rgba(255,255,255,0.5),
+                0 0 45px 12px rgba(255,255,255,0.3);
+        }
+        .glow-effect {
+            position: absolute;
+            top: 50%;
+            right: -2px;
+            transform: translate(0, -50%);
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(
+                circle,
+                rgba(255,255,255,0.8) 0%,
+                rgba(255,255,255,0.4) 30%,
+                rgba(255,255,255,0) 70%
+            );
+            filter: blur(2px);
+        }
+        .sparkle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.8) 60%, rgba(255,255,255,0) 100%);
+            border-radius: 50%;
+            transform-origin: center;
+            animation: sparkle-out 2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            z-index: 1000;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            filter: blur(0.5px);
+        }
+        .sparkle::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: inherit;
+            animation: sparkle-pulse 1s ease-out infinite;
+        }
+        @keyframes sparkle-out {
+            0% {
+                transform: rotate(var(--angle)) translateX(0) scale(0);
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+                transform: rotate(var(--angle)) translateX(25px) scale(1.2);
+            }
+            35% {
+                opacity: 0.9;
+                transform: rotate(var(--angle)) translateX(45px) scale(1);
+            }
+            100% {
+                transform: rotate(var(--angle)) translateX(120px) scale(0);
+                opacity: 0;
+            }
+        }
+        @keyframes sparkle-pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -61,6 +141,56 @@
             background-size: 200% 200%;
             animation: gradient 10s ease infinite;
         }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.98);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(2px) scale(1.01);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(-2px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .delay-300 {
+            animation-delay: 0.3s;
+        }
+        .delay-500 {
+            animation-delay: 0.5s;
+        }
+        .hover\:scale-102:hover {
+            transform: scale(1.02);
+        }
         @keyframes gradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -78,15 +208,17 @@
         </button>
 
         <!-- Popup Modal -->
-        <div id="wishModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-            <div class="bg-white rounded-lg p-8 max-w-lg w-full transform transition-transform duration-300 scale-95 hover:scale-100">
+        <div id="wishModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 animate-fadeIn">
+            <div class="bg-white rounded-lg p-8 max-w-lg w-full transform transition-all duration-500 ease-out animate-slideIn hover:shadow-2xl hover:scale-102 motion-safe:hover:animate-float">
+                <div class="animate-fadeInUp delay-300">
                 <h2 class="text-3xl font-bold text-pink-500 mb-4">With Love ❤️</h2>
-                <p class="text-gray-700 text-lg mb-6">
-                    On this special day, I want to wish you and Jiju a lifetime of love, joy, and beautiful moments together. May your love grow stronger with each passing day, and may your journey be filled with endless happiness and wonderful adventures.
+                <p class="text-gray-700 text-lg mb-6 leading-relaxed">
+                    Dearest Romse didi ✨, on the memorable occasion of your first wedding anniversary 🎉, I wish to convey my sincerest felicitations to you and Jiju 💑. This significant milestone is not merely a celebration of one year passed 🌟, but a tribute to the affection, patience, and devotion that have gracefully adorned your union 💖. May the bond you both cherish continue to deepen with every season 🌸, transforming challenges into opportunities and ordinary days into cherished memories ✨. As you embark upon another year of companionship 🥂, may your journey be perpetually enriched with harmony, prosperity, and timeless joy 🌈, illuminating not only your lives but also the hearts of those around you 💫.
                 </p>
-                <button id="closeBtn" class="bg-pink-500 text-white font-bold py-2 px-6 rounded-full hover:bg-pink-600 transition-colors duration-300">
-                    Close 
+                <button id="closeBtn" class="bg-pink-500 text-white font-bold py-2 px-6 rounded-full hover:bg-pink-600 transition-colors duration-300 animate-fadeInUp delay-500">
+                    Close ✨
                 </button>
+                </div>
             </div>
         </div>
     </div>
