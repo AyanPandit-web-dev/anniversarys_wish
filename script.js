@@ -1,12 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Device detection function
+    // Enhanced device detection function
     const isMobileDevice = () => {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-               (window.matchMedia && window.matchMedia('(max-width: 768px)').matches);
+        const hasTouchScreen = (
+            ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0) ||
+            ('msMaxTouchPoints' in navigator && navigator.msMaxTouchPoints > 0) ||
+            (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ||
+            ('orientation' in window)
+        );
+        
+        const isSmallScreen = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+        const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        return hasTouchScreen || isSmallScreen || isMobileUA;
     };
 
-    // Create shooting star element only for desktop devices
+    // Create shooting star and particle system for desktop devices
     let shootingStar;
+    let particles = [];
+    const maxParticles = 15;
+
+    function createParticle(x, y) {
+        const particle = document.createElement('div');
+        particle.className = 'star-particle';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.setProperty('--random-scale', 0.5 + Math.random() * 0.5);
+        particle.style.setProperty('--random-opacity', 0.3 + Math.random() * 0.7);
+        document.body.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.remove();
+        }, 1000);
+        
+        return particle;
+    }
+
     if (!isMobileDevice()) {
         shootingStar = document.createElement('div');
         shootingStar.className = 'shooting-star';
@@ -26,6 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Only add mousemove listener for desktop devices
     if (!isMobileDevice()) {
+        let lastParticleTime = 0;
+        const particleInterval = 50; // Minimum time between particles
+        
         document.addEventListener('mousemove', (e) => {
             if (!isButtonClicked && shootingStar) {
                 const x = e.clientX;
@@ -71,17 +102,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     ? Math.max(0.2, (distanceToButton / proximityThreshold) * 0.95)
                     : 0.95;
                 
-                // Apply styles
+                // Apply enhanced styles
                 shootingStar.style.setProperty('--trail-length', `${finalLength}px`);
                 shootingStar.style.opacity = opacity;
                 
-                // Add bright flash when very close to button
-                if (distanceToButton < 30) {
-                    shootingStar.style.filter = `blur(1px) brightness(${200 - (distanceToButton * 5)}%)`;
+                // Enhanced glow effect near button
+                if (distanceToButton < 40) {
+                    const glowIntensity = 200 - (distanceToButton * 4);
+                    shootingStar.style.filter = `blur(0.5px) brightness(${glowIntensity}%)`;
+                    shootingStar.style.boxShadow = `0 0 ${glowIntensity/2}px ${glowIntensity/4}px rgba(255,255,255,0.8)`;
                 } else {
-                    shootingStar.style.filter = 'blur(1px)';
+                    shootingStar.style.filter = 'blur(0.5px) brightness(120%)';
+                    shootingStar.style.boxShadow = '';
                 }
                 
+                // Apply position with smooth transition
                 shootingStar.style.left = `${x}px`;
                 shootingStar.style.top = `${y}px`;
                 shootingStar.style.transform = `rotate(${smoothAngle}rad)`;
