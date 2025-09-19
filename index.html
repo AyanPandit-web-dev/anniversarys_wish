@@ -8,53 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        .shooting-star {
-            position: fixed;
-            width: 6px;
-            height: 6px;
-            background: radial-gradient(circle, #fff 0%, #ff69b4 50%, transparent 100%);
-            border-radius: 50%;
-            filter: blur(0.5px) brightness(1.2);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            z-index: 1000;
-            box-shadow: 
-                0 0 20px 2px rgba(255, 255, 255, 0.7),
-                0 0 40px 5px rgba(255, 105, 180, 0.5);
-        }
-        .shooting-star::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 105, 180, 0.4) 30%, transparent 70%);
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-        .shooting-star::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: var(--trail-length, 120px);
-            background: linear-gradient(
-                45deg, 
-                rgba(255, 255, 255, 0.8) 0%,
-                rgba(255, 105, 180, 0.6) 20%,
-                rgba(255, 105, 180, 0.3) 40%,
-                transparent 100%
-            );
-            transform-origin: top;
-            transform: rotate(45deg);
-            filter: blur(1px);
-            box-shadow: 
-                0 0 30px rgba(255, 105, 180, 0.3),
-                0 0 60px rgba(255, 105, 180, 0.2);
-        }
+
         .glow-effect {
             position: absolute;
             top: 50%;
@@ -245,8 +199,8 @@
         </button>
 
         <!-- Popup Modal -->
-        <div id="wishModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 animate-fadeIn">
-            <div class="bg-white rounded-lg p-8 max-w-lg w-full transform transition-all duration-500 ease-out animate-slideIn hover:shadow-2xl hover:scale-102 motion-safe:hover:animate-float">
+        <div id="wishModal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
+            <div class="bg-gradient-to-br from-white to-pink-50 rounded-2xl p-8 max-w-lg w-full transform transition-all duration-500 ease-out animate-slideIn hover:shadow-2xl hover:scale-102 motion-safe:hover:animate-float border border-pink-100 shadow-pink-200">
                 <div class="animate-fadeInUp delay-300">
                 <h2 class="text-3xl font-bold text-pink-500 mb-4">With Love ❤️</h2>
                 <p class="text-gray-700 text-lg mb-6 leading-relaxed">

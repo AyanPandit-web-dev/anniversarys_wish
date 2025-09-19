@@ -1,200 +1,89 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Enhanced device detection function
-    const isMobileDevice = () => {
-        const hasTouchScreen = (
-            ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0) ||
-            ('msMaxTouchPoints' in navigator && navigator.msMaxTouchPoints > 0) ||
-            (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ||
-            ('orientation' in window)
-        );
-        
-        const isSmallScreen = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
-        const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        return hasTouchScreen || isSmallScreen || isMobileUA;
-    };
-
-    // Create shooting star and particle system for desktop devices
-    let shootingStar;
-    let particles = [];
-    const maxParticles = 15;
-
-    function createParticle(x, y) {
-        const particle = document.createElement('div');
-        particle.className = 'star-particle';
-        particle.style.left = x + 'px';
-        particle.style.top = y + 'px';
-        particle.style.setProperty('--random-scale', 0.5 + Math.random() * 0.5);
-        particle.style.setProperty('--random-opacity', 0.3 + Math.random() * 0.7);
-        document.body.appendChild(particle);
-        
-        setTimeout(() => {
-            particle.remove();
-        }, 1000);
-        
-        return particle;
-    }
-
-    if (!isMobileDevice()) {
-        shootingStar = document.createElement('div');
-        shootingStar.className = 'shooting-star';
-        const glowEffect = document.createElement('div');
-        glowEffect.className = 'glow-effect';
-        shootingStar.appendChild(glowEffect);
-        document.body.appendChild(shootingStar);
-    }
-
     // Track if button is clicked
     let isButtonClicked = false;
 
-    // Update shooting star position and rotation based on mouse movement
-    let lastX = 0;
-    let lastY = 0;
-    let lastAngle = 0;
-
-    // Only add mousemove listener for desktop devices
-    if (!isMobileDevice()) {
-        let lastParticleTime = 0;
-        const particleInterval = 30; // Faster particle creation for smoother trail
-        
-        document.addEventListener('mousemove', (e) => {
-            if (!isButtonClicked && shootingStar) {
-                const x = e.clientX;
-                const y = e.clientY;
-                
-                // Get button position
-                const button = document.getElementById('wishBtn');
-                const buttonRect = button.getBoundingClientRect();
-                const buttonCenterX = buttonRect.left + buttonRect.width / 2;
-                const buttonCenterY = buttonRect.top + buttonRect.height / 2;
-                
-                // Calculate angle to button
-                const dx = buttonCenterX - x;
-                const dy = buttonCenterY - y;
-                const targetAngle = Math.atan2(dy, dx);
-                
-                // Faster and smoother angle transition
-                const angleDiff = targetAngle - lastAngle;
-                const smoothAngle = lastAngle + (angleDiff * 0.3); // Faster rotation
-                
-                // Calculate movement speed with less smoothing for faster response
-                const moveSpeedX = x - lastX;
-                const moveSpeedY = y - lastY;
-                const moveSpeed = Math.sqrt(moveSpeedX * moveSpeedX + moveSpeedY * moveSpeedY) * 1.5;
-                
-                // Calculate distance to button and normalize it
-                const distanceToButton = Math.sqrt(dx * dx + dy * dy);
-                const maxDistance = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
-                const normalizedDistance = distanceToButton / maxDistance;
-                
-                // Dynamic trail length based on speed and distance
-                const minLength = 40; // Shorter minimum length for better responsiveness
-                const maxLength = 200; // Adjusted maximum length
-                const baseLength = minLength + (normalizedDistance * (maxLength - minLength));
-                
-                // Enhanced speed factor for more dynamic effect
-                const speedFactor = Math.min(moveSpeed * 2.5, 150);
-                
-                // Calculate final length and opacity
-                const finalLength = baseLength + speedFactor;
-                const proximityThreshold = 100; // Distance threshold for vanishing effect
-                const opacity = distanceToButton < proximityThreshold 
-                    ? Math.max(0.2, (distanceToButton / proximityThreshold) * 0.95)
-                    : 0.95;
-                
-                // Apply enhanced styles
-                shootingStar.style.setProperty('--trail-length', `${finalLength}px`);
-                shootingStar.style.opacity = opacity;
-                
-                // Enhanced glow effect near button
-                if (distanceToButton < 40) {
-                    const glowIntensity = 200 - (distanceToButton * 4);
-                    shootingStar.style.filter = `blur(0.5px) brightness(${glowIntensity}%)`;
-                    shootingStar.style.boxShadow = `0 0 ${glowIntensity/2}px ${glowIntensity/4}px rgba(255,255,255,0.8)`;
-                } else {
-                    shootingStar.style.filter = 'blur(0.5px) brightness(120%)';
-                    shootingStar.style.boxShadow = '';
-                }
-                
-                // Apply position with smooth transition
-                shootingStar.style.left = `${x}px`;
-                shootingStar.style.top = `${y}px`;
-                shootingStar.style.transform = `rotate(${smoothAngle}rad)`;
-                
-                lastX = x;
-                lastY = y;
-                lastAngle = smoothAngle;
-            }
-        });
-    }
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        const isMobile = isMobileDevice();
-        if (isMobile && shootingStar) {
-            shootingStar.remove();
-            shootingStar = null;
-        } else if (!isMobile && !shootingStar) {
-            shootingStar = document.createElement('div');
-            shootingStar.className = 'shooting-star';
-            const glowEffect = document.createElement('div');
-            glowEffect.className = 'glow-effect';
-            shootingStar.appendChild(glowEffect);
-            document.body.appendChild(shootingStar);
-        }
-    });
-
-    // Hide shooting star when button is clicked (only for desktop)
     document.getElementById('wishBtn').addEventListener('click', () => {
         isButtonClicked = true;
-        if (shootingStar) {
-            shootingStar.style.opacity = '0';
-            setTimeout(() => shootingStar.remove(), 300);
-        }
     });
 
     const wishBtn = document.getElementById('wishBtn');
     const wishModal = document.getElementById('wishModal');
     const closeBtn = document.getElementById('closeBtn');
 
-    // Function to create confetti effects
+    // Enhanced confetti celebration effects
     const fireConfetti = () => {
-        // First burst
+        // Initial burst with hearts and stars
         confetti({
-            particleCount: 100,
-            spread: 70,
+            particleCount: 150,
+            spread: 80,
             origin: { y: 0.6 },
             colors: ['#ff69b4', '#ff1493', '#ff69b4', '#ffffff'],
+            shapes: ['circle', 'star'],
+            ticks: 200,
+            gravity: 0.8,
+            scalar: 1.2,
+            drift: 0.1,
         });
 
-        // Side bursts
-        setTimeout(() => {
-            confetti({
-                particleCount: 50,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0, y: 0.65 },
-                colors: ['#ff69b4', '#ff1493', '#ffffff'],
-            });
-            confetti({
-                particleCount: 50,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1, y: 0.65 },
-                colors: ['#ff69b4', '#ff1493', '#ffffff'],
-            });
-        }, 150);
+        // Cascading side bursts
+        for(let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                // Left burst
+                confetti({
+                    particleCount: 40,
+                    angle: 60,
+                    spread: 50,
+                    origin: { x: 0, y: 0.65 },
+                    colors: ['#ff69b4', '#ff1493', '#ffffff'],
+                    ticks: 150,
+                    gravity: 0.6,
+                    drift: 0.2,
+                    scalar: 1.1,
+                });
+                // Right burst
+                confetti({
+                    particleCount: 40,
+                    angle: 120,
+                    spread: 50,
+                    origin: { x: 1, y: 0.65 },
+                    colors: ['#ff69b4', '#ff1493', '#ffffff'],
+                    ticks: 150,
+                    gravity: 0.6,
+                    drift: 0.2,
+                    scalar: 1.1,
+                });
+            }, i * 200);
+        }
 
-        // Final burst with stars
+        // Magical sparkle bursts
         setTimeout(() => {
             confetti({
-                particleCount: 80,
-                spread: 100,
+                particleCount: 100,
+                spread: 120,
                 origin: { y: 0.7 },
                 shapes: ['star'],
-                colors: ['#FFD700', '#FFA500', '#ffffff'],
+                colors: ['#FFD700', '#FFA500', '#ffffff', '#ff69b4'],
+                ticks: 180,
+                gravity: 0.4,
+                scalar: 1.3,
+                drift: 0.2,
             });
-        }, 300);
+        }, 600);
+
+        // Final celebratory shower
+        setTimeout(() => {
+            confetti({
+                particleCount: 200,
+                spread: 160,
+                origin: { y: 0.5 },
+                colors: ['#ff69b4', '#ff1493', '#FFD700', '#ffffff'],
+                ticks: 220,
+                gravity: 0.6,
+                drift: 0.1,
+                scalar: 1.2,
+                shapes: ['circle', 'star'],
+            });
+        }, 900);
     };
 
     // Function to open modal with animation and confetti
