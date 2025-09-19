@@ -86,32 +86,65 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 900);
     };
 
-    // Function to open modal with animation and confetti
+    // Function to open modal with spectacular transition and confetti
     const openModal = () => {
-        wishModal.classList.remove('hidden');
-        wishModal.querySelector('div').classList.add('scale-100');
-        wishModal.querySelector('div').classList.remove('scale-95');
-        fireConfetti();
+        // Create and animate overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        document.body.appendChild(overlay);
+        
+        // Prepare modal content for animation
+        const modalContent = wishModal.querySelector('div');
+        modalContent.style.transform = 'scale(0.8) translateY(20px)';
+        modalContent.style.opacity = '0';
+        
+        // Trigger animations in sequence
+        requestAnimationFrame(() => {
+            overlay.classList.add('show');
+            wishModal.classList.remove('hidden');
+            
+            requestAnimationFrame(() => {
+                modalContent.style.transform = 'scale(1) translateY(0)';
+                modalContent.style.opacity = '1';
+                modalContent.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                
+                // Trigger title animation
+                const title = modalContent.querySelector('h2');
+                if (title) {
+                    title.style.animation = 'titlePulse 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                }
+                
+                // Fire confetti with slight delay for better timing
+                setTimeout(fireConfetti, 200);
+            });
+        });
     };
 
-    // Function to close modal with smooth animation
+    // Function to close modal with spectacular fade-out animation
     const closeModal = () => {
         const modalContent = wishModal.querySelector('div');
-        modalContent.style.opacity = '0';
-        modalContent.style.transform = 'translateY(10px) scale(0.95)';
-        modalContent.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        const overlay = document.querySelector('.modal-overlay');
         
-        setTimeout(() => {
-            wishModal.style.opacity = '0';
-            wishModal.style.transition = 'opacity 0.3s ease-out';
-        }, 100);
-
+        // Animate content out
+        modalContent.style.transform = 'scale(0.9) translateY(-20px)';
+        modalContent.style.opacity = '0';
+        modalContent.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        
+        // Fade out overlay
+        if (overlay) {
+            overlay.style.opacity = '0';
+            overlay.style.transition = 'opacity 0.5s ease-out';
+        }
+        
+        // Clean up after animations
         setTimeout(() => {
             wishModal.classList.add('hidden');
+            if (overlay) {
+                document.body.removeChild(overlay);
+            }
             // Reset styles for next opening
             modalContent.style = '';
-            wishModal.style = '';
-        }, 500);
+        }, 600);
     };
 
     // Event listeners
