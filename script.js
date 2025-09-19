@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Only add mousemove listener for desktop devices
     if (!isMobileDevice()) {
         let lastParticleTime = 0;
-        const particleInterval = 50; // Minimum time between particles
+        const particleInterval = 30; // Faster particle creation for smoother trail
         
         document.addEventListener('mousemove', (e) => {
             if (!isButtonClicked && shootingStar) {
@@ -73,27 +73,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dy = buttonCenterY - y;
                 const targetAngle = Math.atan2(dy, dx);
                 
-                // Smooth angle transition
+                // Faster and smoother angle transition
                 const angleDiff = targetAngle - lastAngle;
-                const smoothAngle = lastAngle + (angleDiff * 0.2); // Increased smoothing factor
+                const smoothAngle = lastAngle + (angleDiff * 0.3); // Faster rotation
                 
-                // Calculate movement speed
+                // Calculate movement speed with less smoothing for faster response
                 const moveSpeedX = x - lastX;
                 const moveSpeedY = y - lastY;
-                const moveSpeed = Math.sqrt(moveSpeedX * moveSpeedX + moveSpeedY * moveSpeedY);
+                const moveSpeed = Math.sqrt(moveSpeedX * moveSpeedX + moveSpeedY * moveSpeedY) * 1.5;
                 
                 // Calculate distance to button and normalize it
                 const distanceToButton = Math.sqrt(dx * dx + dy * dy);
                 const maxDistance = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
                 const normalizedDistance = distanceToButton / maxDistance;
                 
-                // Calculate trail length based on distance (longer when far, shorter when close)
-                const minLength = 50; // Minimum length when very close
-                const maxLength = 250; // Maximum length when far
+                // Dynamic trail length based on speed and distance
+                const minLength = 40; // Shorter minimum length for better responsiveness
+                const maxLength = 200; // Adjusted maximum length
                 const baseLength = minLength + (normalizedDistance * (maxLength - minLength));
                 
-                // Add speed factor for dynamic effect
-                const speedFactor = Math.min(moveSpeed * 2, 100);
+                // Enhanced speed factor for more dynamic effect
+                const speedFactor = Math.min(moveSpeed * 2.5, 150);
                 
                 // Calculate final length and opacity
                 const finalLength = baseLength + speedFactor;
