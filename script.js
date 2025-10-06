@@ -14,76 +14,77 @@ document.addEventListener('DOMContentLoaded', () => {
     const fireConfetti = () => {
         // Initial burst with hearts and stars
         confetti({
-            particleCount: 150,
-            spread: 80,
+            particleCount: 200,
+            spread: 100,
             origin: { y: 0.6 },
-            colors: ['#ff69b4', '#ff1493', '#ff69b4', '#ffffff'],
-            shapes: ['circle', 'star'],
-            ticks: 200,
-            gravity: 0.8,
-            scalar: 1.2,
-            drift: 0.1,
+            colors: ['#ff69b4', '#ff1493', '#ff69b4', '#ffffff', '#FFD700'],
+            shapes: ['circle', 'star', 'square'],
+            ticks: 250,
+            gravity: 0.7,
+            scalar: 1.4,
+            drift: 0.2,
+            disableForReducedMotion: false
         });
 
         // Cascading side bursts
-        for(let i = 0; i < 3; i++) {
+        for(let i = 0; i < 4; i++) {
             setTimeout(() => {
                 // Left burst
                 confetti({
-                    particleCount: 40,
+                    particleCount: 50,
                     angle: 60,
-                    spread: 50,
+                    spread: 60,
                     origin: { x: 0, y: 0.65 },
-                    colors: ['#ff69b4', '#ff1493', '#ffffff'],
-                    ticks: 150,
-                    gravity: 0.6,
-                    drift: 0.2,
-                    scalar: 1.1,
+                    colors: ['#ff69b4', '#ff1493', '#ffffff', '#FFD700'],
+                    ticks: 200,
+                    gravity: 0.5,
+                    drift: 0.3,
+                    scalar: 1.2,
                 });
                 // Right burst
                 confetti({
-                    particleCount: 40,
+                    particleCount: 50,
                     angle: 120,
-                    spread: 50,
+                    spread: 60,
                     origin: { x: 1, y: 0.65 },
-                    colors: ['#ff69b4', '#ff1493', '#ffffff'],
-                    ticks: 150,
-                    gravity: 0.6,
-                    drift: 0.2,
-                    scalar: 1.1,
+                    colors: ['#ff69b4', '#ff1493', '#ffffff', '#FFD700'],
+                    ticks: 200,
+                    gravity: 0.5,
+                    drift: 0.3,
+                    scalar: 1.2,
                 });
-            }, i * 200);
+            }, i * 250);
         }
 
         // Magical sparkle bursts
         setTimeout(() => {
             confetti({
-                particleCount: 100,
-                spread: 120,
+                particleCount: 150,
+                spread: 140,
                 origin: { y: 0.7 },
                 shapes: ['star'],
                 colors: ['#FFD700', '#FFA500', '#ffffff', '#ff69b4'],
-                ticks: 180,
-                gravity: 0.4,
-                scalar: 1.3,
+                ticks: 220,
+                gravity: 0.3,
+                scalar: 1.5,
                 drift: 0.2,
             });
-        }, 600);
+        }, 800);
 
         // Final celebratory shower
         setTimeout(() => {
             confetti({
-                particleCount: 200,
-                spread: 160,
+                particleCount: 250,
+                spread: 180,
                 origin: { y: 0.5 },
                 colors: ['#ff69b4', '#ff1493', '#FFD700', '#ffffff'],
-                ticks: 220,
-                gravity: 0.6,
+                ticks: 280,
+                gravity: 0.5,
                 drift: 0.1,
-                scalar: 1.2,
-                shapes: ['circle', 'star'],
+                scalar: 1.4,
+                shapes: ['circle', 'star', 'square'],
             });
-        }, 900);
+        }, 1200);
     };
 
     // Function to open modal with spectacular transition and confetti
@@ -93,31 +94,56 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.className = 'modal-overlay';
         document.body.appendChild(overlay);
         
-        // Prepare modal content for animation
-        const modalContent = wishModal.querySelector('div');
-        modalContent.style.transform = 'scale(0.8) translateY(20px)';
-        modalContent.style.opacity = '0';
+        // Show modal
+        wishModal.classList.remove('hidden');
         
         // Trigger animations in sequence
-        requestAnimationFrame(() => {
+        setTimeout(() => {
             overlay.classList.add('show');
-            wishModal.classList.remove('hidden');
+            wishModal.classList.add('show');
             
-            requestAnimationFrame(() => {
-                modalContent.style.transform = 'scale(1) translateY(0)';
-                modalContent.style.opacity = '1';
-                modalContent.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                
-                // Trigger title animation
-                const title = modalContent.querySelector('h2');
-                if (title) {
-                    title.style.animation = 'titlePulse 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                }
-                
-                // Fire confetti with slight delay for better timing
-                setTimeout(fireConfetti, 200);
+            // Animate content elements with staggered timing
+            const title = wishModal.querySelector('h2');
+            const paragraphs = wishModal.querySelectorAll('p');
+            const button = wishModal.querySelector('button');
+            
+            if (title) {
+                title.style.opacity = '0';
+                title.style.transform = 'translateY(-20px)';
+                title.classList.add('shimmer-text');
+                setTimeout(() => {
+                    title.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    title.style.opacity = '1';
+                    title.style.transform = 'translateY(0)';
+                    title.classList.add('animate-title');
+                }, 300);
+            }
+            
+            // Animate paragraphs with staggered delay
+            paragraphs.forEach((p, index) => {
+                p.style.opacity = '0';
+                p.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    p.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    p.style.opacity = '1';
+                    p.style.transform = 'translateY(0)';
+                }, 500 + (index * 200));
             });
-        });
+            
+            // Animate button
+            if (button) {
+                button.style.opacity = '0';
+                button.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    button.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    button.style.opacity = '1';
+                    button.style.transform = 'scale(1)';
+                }, 800);
+            }
+            
+            // Fire confetti with slight delay for better timing
+            setTimeout(fireConfetti, 400);
+        }, 100);
     };
 
     // Function to close modal with spectacular fade-out animation
@@ -148,7 +174,24 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Event listeners
-    wishBtn.addEventListener('click', openModal);
+    wishBtn.addEventListener('click', function(e) {
+        // Add button click animation class
+        this.classList.add('button-clicked');
+        
+        // Create ripple effect
+        const ripple = document.createElement('div');
+        ripple.className = 'btn-ripple';
+        ripple.style.left = (e.clientX - this.getBoundingClientRect().left) + 'px';
+        ripple.style.top = (e.clientY - this.getBoundingClientRect().top) + 'px';
+        this.appendChild(ripple);
+        
+        // Remove ripple and class after animation completes
+        setTimeout(() => {
+            ripple.remove();
+            this.classList.remove('button-clicked');
+            openModal();
+        }, 600);
+    });
     closeBtn.addEventListener('click', closeModal);
 
     // Close modal when clicking outside
