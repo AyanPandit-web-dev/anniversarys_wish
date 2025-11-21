@@ -12,9 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Enhanced confetti celebration effects
     const fireConfetti = () => {
+        const isMobile = window.innerWidth <= 768;
+        const particleMultiplier = isMobile ? 0.7 : 1;
+        
         // Initial burst with hearts and stars
         confetti({
-            particleCount: 200,
+            particleCount: Math.floor(200 * particleMultiplier),
             spread: 100,
             origin: { y: 0.6 },
             colors: ['#ff69b4', '#ff1493', '#ff69b4', '#ffffff', '#FFD700'],
@@ -23,15 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
             gravity: 0.7,
             scalar: 1.4,
             drift: 0.2,
-            disableForReducedMotion: false
+            disableForReducedMotion: true
         });
 
         // Cascading side bursts
-        for(let i = 0; i < 4; i++) {
+        const burstCount = isMobile ? 3 : 4;
+        for(let i = 0; i < burstCount; i++) {
             setTimeout(() => {
                 // Left burst
                 confetti({
-                    particleCount: 50,
+                    particleCount: Math.floor(50 * particleMultiplier),
                     angle: 60,
                     spread: 60,
                     origin: { x: 0, y: 0.65 },
@@ -40,10 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     gravity: 0.5,
                     drift: 0.3,
                     scalar: 1.2,
+                    disableForReducedMotion: true
                 });
                 // Right burst
                 confetti({
-                    particleCount: 50,
+                    particleCount: Math.floor(50 * particleMultiplier),
                     angle: 120,
                     spread: 60,
                     origin: { x: 1, y: 0.65 },
@@ -52,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     gravity: 0.5,
                     drift: 0.3,
                     scalar: 1.2,
+                    disableForReducedMotion: true
                 });
             }, i * 250);
         }
@@ -59,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Magical sparkle bursts
         setTimeout(() => {
             confetti({
-                particleCount: 150,
+                particleCount: Math.floor(150 * particleMultiplier),
                 spread: 140,
                 origin: { y: 0.7 },
                 shapes: ['star'],
@@ -68,13 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 gravity: 0.3,
                 scalar: 1.5,
                 drift: 0.2,
+                disableForReducedMotion: true
             });
         }, 800);
 
         // Final celebratory shower
         setTimeout(() => {
             confetti({
-                particleCount: 250,
+                particleCount: Math.floor(250 * particleMultiplier),
                 spread: 180,
                 origin: { y: 0.5 },
                 colors: ['#ff69b4', '#ff1493', '#FFD700', '#ffffff'],
@@ -83,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 drift: 0.1,
                 scalar: 1.4,
                 shapes: ['circle', 'star', 'square'],
+                disableForReducedMotion: true
             });
         }, 1200);
     };
@@ -112,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 title.style.transform = 'translateY(-20px)';
                 title.classList.add('shimmer-text');
                 setTimeout(() => {
-                    title.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    title.style.transition = 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
                     title.style.opacity = '1';
                     title.style.transform = 'translateY(0)';
                     title.classList.add('animate-title');
@@ -124,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 p.style.opacity = '0';
                 p.style.transform = 'translateY(20px)';
                 setTimeout(() => {
-                    p.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    p.style.transition = 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
                     p.style.opacity = '1';
                     p.style.transform = 'translateY(0)';
                 }, 500 + (index * 200));
@@ -135,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.style.opacity = '0';
                 button.style.transform = 'scale(0.8)';
                 setTimeout(() => {
-                    button.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    button.style.transition = 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
                     button.style.opacity = '1';
                     button.style.transform = 'scale(1)';
                 }, 800);
@@ -154,23 +162,24 @@ document.addEventListener('DOMContentLoaded', () => {
         // Animate content out
         modalContent.style.transform = 'scale(0.9) translateY(-20px)';
         modalContent.style.opacity = '0';
-        modalContent.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        modalContent.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
         
         // Fade out overlay
         if (overlay) {
             overlay.style.opacity = '0';
-            overlay.style.transition = 'opacity 0.5s ease-out';
+            overlay.style.transition = 'opacity 0.7s ease-out';
         }
         
         // Clean up after animations
         setTimeout(() => {
             wishModal.classList.add('hidden');
+            wishModal.classList.remove('show');
             if (overlay) {
                 document.body.removeChild(overlay);
             }
             // Reset styles for next opening
             modalContent.style = '';
-        }, 600);
+        }, 800);
     };
 
     // Event listeners
@@ -203,6 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add floating hearts and sprinkler animations
     const emojis = ['❤️', '✨', '🎉', '💫', '🌟', '💖', '🎊'];
+    const isMobile = window.innerWidth <= 768;
+    const emojiInterval = isMobile ? 500 : 300; // Slower on mobile for better performance
     
     setInterval(() => {
         const element = document.createElement('div');
@@ -216,29 +227,47 @@ document.addEventListener('DOMContentLoaded', () => {
         element.style.pointerEvents = 'none';
         element.style.zIndex = '1000';
         element.style.filter = 'drop-shadow(0 0 3px rgba(255,255,255,0.5))';
+        element.style.willChange = 'transform, opacity'; // Performance hint
         document.body.appendChild(element);
 
         setTimeout(() => {
-            document.body.removeChild(element);
+            if (document.body.contains(element)) {
+                document.body.removeChild(element);
+            }
         }, 4000);
-    }, 300);
+    }, emojiInterval);
 
-    // Add sprinkler effect on button click
+    // Add sprinkler effect on button click with enhanced sparkles
     wishBtn.addEventListener('click', () => {
-        for(let i = 0; i < 30; i++) {
+        const isMobile = window.innerWidth <= 768;
+        const sparkleCount = isMobile ? 40 : 50;
+        const sparkleDelay = isMobile ? 30 : 40;
+        
+        for(let i = 0; i < sparkleCount; i++) {
             setTimeout(() => {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
                 sparkle.style.left = '50%';
                 sparkle.style.top = '50%';
-                sparkle.style.setProperty('--angle', (i * 12) + 'deg');
+                sparkle.style.setProperty('--angle', (i * (360 / sparkleCount)) + 'deg');
                 sparkle.style.setProperty('--delay', (i * 0.1) + 's');
+                
+                // Add random color variations for enhanced effect
+                const colors = [
+                    'radial-gradient(circle, #fff 0%, rgba(255,255,255,0.9) 40%, rgba(255,215,0,0.7) 70%, rgba(255,255,255,0) 100%)',
+                    'radial-gradient(circle, #fff 0%, rgba(255,255,255,0.9) 40%, rgba(255,105,180,0.7) 70%, rgba(255,255,255,0) 100%)',
+                    'radial-gradient(circle, #fff 0%, rgba(255,255,255,0.9) 40%, rgba(255,192,203,0.7) 70%, rgba(255,255,255,0) 100%)'
+                ];
+                sparkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
                 document.body.appendChild(sparkle);
 
                 setTimeout(() => {
-                    document.body.removeChild(sparkle);
-                }, 2000);
-            }, i * 50);
+                    if (document.body.contains(sparkle)) {
+                        document.body.removeChild(sparkle);
+                    }
+                }, 2500);
+            }, i * sparkleDelay);
         }
     });
 });

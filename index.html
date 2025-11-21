@@ -8,12 +8,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
+        /* Mobile-first responsive design */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
 
         /* Cool button hover effect */
         #wishBtn {
             position: relative;
             overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            touch-action: manipulation;
         }
         
         #wishBtn::before {
@@ -30,17 +35,19 @@
                 transparent 70%
             );
             transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             z-index: -1;
             opacity: 0;
         }
         
-        #wishBtn:hover::before {
+        #wishBtn:hover::before,
+        #wishBtn:active::before {
             transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
         
-        #wishBtn:hover {
+        #wishBtn:hover,
+        #wishBtn:active {
             transform: translateY(-3px);
             box-shadow: 
                 0 10px 20px rgba(255, 105, 180, 0.3),
@@ -97,16 +104,17 @@
         }
         .sparkle {
             position: fixed;
-            width: 6px;
-            height: 6px;
-            background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.8) 60%, rgba(255,255,255,0) 100%);
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.9) 40%, rgba(255,215,0,0.7) 70%, rgba(255,255,255,0) 100%);
             border-radius: 50%;
             transform-origin: center;
-            animation: sparkle-out 2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation: sparkle-out 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             z-index: 1000;
             pointer-events: none;
             mix-blend-mode: screen;
-            filter: blur(0.5px);
+            filter: blur(0.3px);
+            box-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 12px rgba(255,215,0,0.6);
         }
         .sparkle::before {
             content: '';
@@ -115,7 +123,18 @@
             height: 100%;
             background: inherit;
             border-radius: inherit;
-            animation: sparkle-pulse 1s ease-out infinite;
+            animation: sparkle-pulse 0.8s ease-in-out infinite;
+        }
+        .sparkle::after {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            top: -25%;
+            left: -25%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+            border-radius: inherit;
+            animation: sparkle-glow 1.2s ease-in-out infinite;
         }
         @keyframes sparkle-out {
             0% {
@@ -124,29 +143,39 @@
             }
             15% {
                 opacity: 1;
-                transform: rotate(var(--angle)) translateX(25px) scale(1.2);
+                transform: rotate(var(--angle)) translateX(30px) scale(1.4);
             }
             35% {
-                opacity: 0.9;
-                transform: rotate(var(--angle)) translateX(45px) scale(1);
+                opacity: 1;
+                transform: rotate(var(--angle)) translateX(60px) scale(1.2);
+            }
+            70% {
+                opacity: 0.8;
+                transform: rotate(var(--angle)) translateX(100px) scale(0.8);
             }
             100% {
-                transform: rotate(var(--angle)) translateX(120px) scale(0);
+                transform: rotate(var(--angle)) translateX(150px) scale(0);
                 opacity: 0;
             }
         }
         @keyframes sparkle-pulse {
-            0% {
+            0%, 100% {
                 transform: scale(1);
                 opacity: 1;
             }
             50% {
-                transform: scale(1.5);
-                opacity: 0.7;
+                transform: scale(1.6);
+                opacity: 0.6;
             }
-            100% {
+        }
+        @keyframes sparkle-glow {
+            0%, 100% {
+                opacity: 0.3;
                 transform: scale(1);
-                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.5);
             }
         }
         .star-particle {
@@ -254,9 +283,10 @@
                  rgba(0,0,0,0.85) 100%
              );
              opacity: 0;
-             transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+             transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
              z-index: 40;
              backdrop-filter: blur(12px);
+             -webkit-backdrop-filter: blur(12px);
          }
          
          .modal-overlay.show {
@@ -272,7 +302,7 @@
                  rgba(255,255,255,0.95),
                  rgba(255,255,255,0.85)
              );
-             padding: 2.5rem;
+             padding: 2rem;
              border-radius: 1.5rem;
              box-shadow: 
                  0 25px 50px -12px rgba(0, 0, 0, 0.3),
@@ -281,11 +311,14 @@
              position: relative;
              border: 2px solid rgba(255,255,255,0.5);
              backdrop-filter: blur(12px);
+             -webkit-backdrop-filter: blur(12px);
              transform-origin: center;
              overflow: hidden;
              transform: scale(0.8);
              opacity: 0;
-             transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+             transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+             max-height: 90vh;
+             overflow-y: auto;
          }
          
          #wishModal.show > div {
@@ -392,6 +425,91 @@
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        /* Mobile-specific responsive styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem !important;
+                margin-bottom: 1.5rem !important;
+                line-height: 1.2;
+            }
+            
+            p {
+                font-size: 1.25rem !important;
+                margin-bottom: 2rem !important;
+            }
+            
+            #wishBtn {
+                font-size: 1.125rem !important;
+                padding: 1rem 2rem !important;
+                margin: 0 auto;
+                display: block;
+            }
+            
+            #wishModal > div {
+                padding: 1.5rem;
+                margin: 1rem;
+                border-radius: 1.25rem;
+            }
+            
+            #wishModal h2 {
+                font-size: 1.75rem !important;
+                margin-bottom: 1rem;
+            }
+            
+            #wishModal p {
+                font-size: 1rem !important;
+                margin-bottom: 1.5rem;
+                line-height: 1.6;
+            }
+            
+            #closeBtn {
+                padding: 0.75rem 1.5rem !important;
+            }
+            
+            .star {
+                display: none;
+            }
+            
+            /* Reduce sparkle distance on mobile for better performance */
+            @keyframes sparkle-out {
+                0% {
+                    transform: rotate(var(--angle)) translateX(0) scale(0);
+                    opacity: 0;
+                }
+                15% {
+                    opacity: 1;
+                    transform: rotate(var(--angle)) translateX(20px) scale(1.2);
+                }
+                35% {
+                    opacity: 1;
+                    transform: rotate(var(--angle)) translateX(40px) scale(1);
+                }
+                70% {
+                    opacity: 0.8;
+                    transform: rotate(var(--angle)) translateX(60px) scale(0.8);
+                }
+                100% {
+                    transform: rotate(var(--angle)) translateX(80px) scale(0);
+                    opacity: 0;
+                }
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem !important;
+            }
+            
+            #wishModal > div {
+                padding: 1.25rem;
+            }
+        }
+
+        /* Smooth scrolling for all elements */
+        * {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
