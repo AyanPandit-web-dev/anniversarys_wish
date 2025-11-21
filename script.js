@@ -13,9 +13,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishModal = document.getElementById('wishModal');
     const closeBtn = document.getElementById('closeBtn');
     
-    // Magical cursor trail effect
+    // Store intervals for cleanup
+    const intervals = [];
+    
+    // Throttle function for performance
+    const throttle = (func, limit) => {
+        let inThrottle;
+        return function(...args) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    };
+    
+    // Magical cursor trail effect with throttling
     if (!isMobileDevice()) {
-        document.addEventListener('mousemove', (e) => {
+        const createCursorTrail = throttle((e) => {
             const trail = document.createElement('div');
             trail.className = 'cursor-trail';
             trail.style.left = e.pageX + 'px';
@@ -32,11 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.body.removeChild(trail);
                 }
             }, 1000);
-        });
+        }, 50); // Throttle to once every 50ms
+        
+        document.addEventListener('mousemove', createCursorTrail);
     }
     
     // Heart rain effect - triggered periodically
-    setInterval(() => {
+    const heartRainInterval = setInterval(() => {
         if (!isMobileDevice() || Math.random() > 0.5) {
             const heart = document.createElement('div');
             heart.className = 'heart-rain';
@@ -53,6 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 4000);
         }
     }, 800);
+    
+    intervals.push(heartRainInterval);
+    
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+        intervals.forEach(interval => clearInterval(interval));
+    });
 
     // Enhanced confetti celebration effects
     const fireConfetti = () => {
@@ -306,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const emojis = ['❤️', '✨', '🎉', '💫', '🌟', '💖', '🎊'];
     const emojiInterval = isMobileDevice() ? 500 : 300; // Slower on mobile for better performance
     
-    setInterval(() => {
+    const floatingEmojiInterval = setInterval(() => {
         const element = document.createElement('div');
         element.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
         element.style.position = 'fixed';
@@ -327,6 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 4000);
     }, emojiInterval);
+    
+    intervals.push(floatingEmojiInterval);
 
     // Add sprinkler effect on button click with enhanced sparkles
     wishBtn.addEventListener('click', () => {
