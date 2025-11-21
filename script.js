@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Track if button is clicked
     let isButtonClicked = false;
+    
+    // Utility function for mobile detection
+    const isMobileDevice = () => window.innerWidth <= 768;
 
     document.getElementById('wishBtn').addEventListener('click', () => {
         isButtonClicked = true;
@@ -12,8 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Enhanced confetti celebration effects
     const fireConfetti = () => {
-        const isMobile = window.innerWidth <= 768;
-        const particleMultiplier = isMobile ? 0.7 : 1;
+        const particleMultiplier = isMobileDevice() ? 0.7 : 1;
         
         // Initial burst with hearts and stars
         confetti({
@@ -30,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Cascading side bursts
-        const burstCount = isMobile ? 3 : 4;
+        const burstCount = isMobileDevice() ? 3 : 4;
         for(let i = 0; i < burstCount; i++) {
             setTimeout(() => {
                 // Left burst
@@ -212,8 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add floating hearts and sprinkler animations
     const emojis = ['❤️', '✨', '🎉', '💫', '🌟', '💖', '🎊'];
-    const isMobile = window.innerWidth <= 768;
-    const emojiInterval = isMobile ? 500 : 300; // Slower on mobile for better performance
+    const emojiInterval = isMobileDevice() ? 500 : 300; // Slower on mobile for better performance
     
     setInterval(() => {
         const element = document.createElement('div');
@@ -239,9 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add sprinkler effect on button click with enhanced sparkles
     wishBtn.addEventListener('click', () => {
-        const isMobile = window.innerWidth <= 768;
-        const sparkleCount = isMobile ? 40 : 50;
-        const sparkleDelay = isMobile ? 30 : 40;
+        const sparkleCount = isMobileDevice() ? 40 : 50;
+        const sparkleDelay = isMobileDevice() ? 30 : 40;
         
         for(let i = 0; i < sparkleCount; i++) {
             setTimeout(() => {

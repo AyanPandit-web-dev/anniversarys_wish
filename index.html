@@ -471,30 +471,6 @@
             .star {
                 display: none;
             }
-            
-            /* Reduce sparkle distance on mobile for better performance */
-            @keyframes sparkle-out {
-                0% {
-                    transform: rotate(var(--angle)) translateX(0) scale(0);
-                    opacity: 0;
-                }
-                15% {
-                    opacity: 1;
-                    transform: rotate(var(--angle)) translateX(20px) scale(1.2);
-                }
-                35% {
-                    opacity: 1;
-                    transform: rotate(var(--angle)) translateX(40px) scale(1);
-                }
-                70% {
-                    opacity: 0.8;
-                    transform: rotate(var(--angle)) translateX(60px) scale(0.8);
-                }
-                100% {
-                    transform: rotate(var(--angle)) translateX(80px) scale(0);
-                    opacity: 0;
-                }
-            }
         }
 
         @media (max-width: 480px) {
@@ -507,8 +483,8 @@
             }
         }
 
-        /* Smooth scrolling for all elements */
-        * {
+        /* Smooth scrolling for scrollable containers */
+        html {
             scroll-behavior: smooth;
         }
     </style>
