@@ -12,6 +12,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishBtn = document.getElementById('wishBtn');
     const wishModal = document.getElementById('wishModal');
     const closeBtn = document.getElementById('closeBtn');
+    
+    // Magical cursor trail effect
+    if (!isMobileDevice()) {
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = e.pageX + 'px';
+            trail.style.top = e.pageY + 'px';
+            
+            // Random colors for trail
+            const colors = ['#ff69b4', '#ff1493', '#ffc0cb', '#fff', '#ffd700'];
+            trail.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.body.appendChild(trail);
+            
+            setTimeout(() => {
+                if (document.body.contains(trail)) {
+                    document.body.removeChild(trail);
+                }
+            }, 1000);
+        });
+    }
+    
+    // Heart rain effect - triggered periodically
+    setInterval(() => {
+        if (!isMobileDevice() || Math.random() > 0.5) {
+            const heart = document.createElement('div');
+            heart.className = 'heart-rain';
+            heart.innerHTML = ['❤️', '💕', '💖', '💗', '💓', '💝'][Math.floor(Math.random() * 6)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                if (document.body.contains(heart)) {
+                    document.body.removeChild(heart);
+                }
+            }, 4000);
+        }
+    }, 800);
 
     // Enhanced confetti celebration effects
     const fireConfetti = () => {
@@ -95,6 +136,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 disableForReducedMotion: true
             });
         }, 1200);
+        
+        // Extra heart burst for that WOW factor
+        setTimeout(() => {
+            confetti({
+                particleCount: Math.floor(100 * particleMultiplier),
+                spread: 120,
+                origin: { y: 0.6 },
+                colors: ['#ff69b4', '#ff1493', '#ffc0cb'],
+                shapes: ['circle'],
+                ticks: 300,
+                gravity: 0.4,
+                scalar: 2,
+                disableForReducedMotion: true
+            });
+        }, 1800);
     };
 
     // Function to open modal with spectacular transition and confetti
@@ -195,6 +251,40 @@ document.addEventListener('DOMContentLoaded', () => {
         ripple.style.left = (e.clientX - this.getBoundingClientRect().left) + 'px';
         ripple.style.top = (e.clientY - this.getBoundingClientRect().top) + 'px';
         this.appendChild(ripple);
+        
+        // Create burst of mini hearts from button
+        for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+                const miniHeart = document.createElement('div');
+                miniHeart.innerHTML = '💖';
+                miniHeart.style.position = 'fixed';
+                miniHeart.style.left = e.clientX + 'px';
+                miniHeart.style.top = e.clientY + 'px';
+                miniHeart.style.fontSize = '20px';
+                miniHeart.style.pointerEvents = 'none';
+                miniHeart.style.zIndex = '9999';
+                
+                const angle = (i / 10) * Math.PI * 2;
+                const distance = 50 + Math.random() * 50;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                miniHeart.style.animation = 'none';
+                miniHeart.style.transition = 'all 0.8s ease-out';
+                document.body.appendChild(miniHeart);
+                
+                setTimeout(() => {
+                    miniHeart.style.transform = `translate(${tx}px, ${ty}px) scale(0)`;
+                    miniHeart.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => {
+                    if (document.body.contains(miniHeart)) {
+                        document.body.removeChild(miniHeart);
+                    }
+                }, 900);
+            }, i * 50);
+        }
         
         // Remove ripple and class after animation completes
         setTimeout(() => {
