@@ -2,33 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anniversary Wishes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>✨ Happy Anniversary ✨</title>
     <link rel="stylesheet" href="src/css/variables.css">
     <link rel="stylesheet" href="src/css/base.css">
     <link rel="stylesheet" href="src/css/layout.css">
     <link rel="stylesheet" href="src/css/components.css">
     <link rel="stylesheet" href="src/css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Floating Names Container -->
+    <div id="floatingNames" class="floating-names-container">
+        <div class="floating-name name-1" data-name="sister">Your Sister's Name</div>
+        <div class="floating-name name-2" data-name="spouse">&amp; Spouse's Name</div>
+    </div>
+    
     <div class="container">
         <header>
-            <h1>Celebrate Love</h1>
-            <p>Wishing you endless joy.</p>
+            <div class="hearts-animation">💝</div>
+            <h1 class="glowing-text">Celebrate Love</h1>
+            <p class="subtitle">A beautiful journey together</p>
+            
+            <!-- Names Destination (where they settle) -->
+            <div id="namesDestination" class="names-destination hidden">
+                <div class="settled-name" id="settledName1"></div>
+                <div class="settled-name" id="settledName2"></div>
+            </div>
         </header>
         <main>
-            <button id="wishBtn">Send Wishes</button>
+            <button id="wishBtn" class="wish-button">
+                <span class="button-text">REVEAL WISH</span>
+                <span class="button-shine"></span>
+            </button>
             <div id="wishModal" class="modal hidden">
                 <div class="modal-content">
                     <span id="closeBtn" class="close">&times;</span>
-                    <h2>Happy Anniversary!</h2>
-                    <p>May your love shine brighter.</p>
-                    <p>Cheers to many more years!</p>
-                    <button class="modal-action">Thank You</button>
+                    <h2 class="modal-title">🎉 Happy Anniversary! 🎉</h2>
+                    <div class="wish-content">
+                        <p class="wish-text">May your love story continue to be filled with</p>
+                        <p class="wish-highlight">✨ Joy ✨ Laughter ✨ Adventure ✨</p>
+                        <p class="wish-text">Wishing you countless more years of happiness together!</p>
+                        <div class="hearts-row">💕 💖 💗 💓 💝</div>
+                    </div>
+                    <button class="modal-action">Close</button>
                 </div>
             </div>
         </main>
     </div>
+    
+    <!-- Sparkle Canvas for Enhanced Effects -->
+    <canvas id="sparkleCanvas"></canvas>
+    
     <script src="src/js/vendors/canvas-confetti.min.js"></script>
     <script src="src/js/script.js"></script>
 </body>

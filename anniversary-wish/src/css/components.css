@@ -1,114 +1,288 @@
-:root {
-    --primary-color: #ff6f61; /* Soft coral */
-    --secondary-color: #ffcc00; /* Bright yellow */
-    --background-color: #f9f9f9; /* Light background */
-    --text-color: #333; /* Dark text for contrast */
-    --modal-background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
-    --button-color: #ff6f61; /* Button color */
-    --button-hover-color: #ff4c3b; /* Darker shade for hover */
-    --ripple-color: rgba(255, 255, 255, 0.6); /* Ripple effect color */
-    --sparkle-color: #ffd700; /* Sparkle color */
+/* Enhanced Component Styles for Mobile-First Anniversary Website */
+
+/* Button Ripple Effect */
+.btn-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+    transform: scale(0);
+    pointer-events: none;
+    z-index: 1;
 }
 
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
+/* Enhanced Sparkle Elements */
+.sparkle {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
 }
 
-h2 {
-    font-size: 2rem;
-    color: var(--primary-color);
-    text-align: center;
-    margin-bottom: 1rem;
+.sparkle::before,
+.sparkle::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }
 
-p {
-    font-size: 1rem;
-    line-height: 1.5;
-    text-align: center;
-    margin: 0.5rem 0;
+.sparkle::before {
+    background: radial-gradient(circle, var(--sparkle-color-1) 0%, transparent 70%);
+    animation: pulse-heart 0.5s ease-in-out infinite;
 }
 
-button {
-    background-color: var(--button-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.sparkle::after {
+    background: radial-gradient(circle, var(--sparkle-color-2) 0%, transparent 70%);
+    animation: pulse-heart 0.5s ease-in-out infinite reverse;
 }
 
-button:hover {
-    background-color: var(--button-hover-color);
+/* Sparkle Trail Effect */
+.sparkle-trail {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+    z-index: 9998;
 }
 
-.modal-overlay {
+.sparkle-trail::before {
+    content: '✨';
+    position: absolute;
+    font-size: 16px;
+    animation: sparkle-trail 1s ease-out forwards;
+}
+
+/* Confetti Particle */
+.confetti-particle {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    z-index: 9997;
+    animation: confetti-burst 2s ease-out forwards;
+}
+
+/* Heart Emoji Floating Background */
+.floating-emoji {
+    position: fixed;
+    font-size: clamp(1rem, 3vw, 2rem);
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.7;
+    animation: hearts-float 8s ease-in-out infinite;
+}
+
+/* Glow Effect for Interactive Elements */
+.glow-effect {
+    position: relative;
+}
+
+.glow-effect::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: inherit;
+    background: linear-gradient(45deg, 
+        var(--sparkle-color-1),
+        var(--sparkle-color-2),
+        var(--sparkle-color-3),
+        var(--sparkle-color-4),
+        var(--sparkle-color-5)
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 3s ease infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    filter: blur(15px);
+}
+
+.glow-effect:hover::before {
+    opacity: 0.8;
+}
+
+/* Loading Sparkle Animation */
+@keyframes loading-sparkle {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Shimmer Text Effect */
+.shimmer-text {
+    background: linear-gradient(90deg,
+        var(--sparkle-color-1) 0%,
+        var(--sparkle-color-2) 25%,
+        var(--sparkle-color-3) 50%,
+        var(--sparkle-color-4) 75%,
+        var(--sparkle-color-5) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+}
+
+/* Particle Container for Dynamic Effects */
+.particle-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 999;
+    pointer-events: none;
+    z-index: 50;
+    overflow: hidden;
 }
 
-.modal-overlay.show {
-    opacity: 1;
+/* Star Burst Effect */
+.star-burst {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: var(--sparkle-color-1);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 10px var(--sparkle-color-1),
+        0 0 20px var(--sparkle-color-2),
+        0 0 30px var(--sparkle-color-3);
+    animation: enhanced-sparkle 1.5s ease-out forwards;
 }
 
-.wish-modal {
+/* Celebration Burst Container */
+.celebration-burst {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--modal-background);
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    padding: 2rem;
-    z-index: 1000;
-    max-width: 90%;
-    width: 400px;
+    pointer-events: none;
+    z-index: 9996;
 }
 
-.btn-ripple {
+/* Touch Feedback */
+.touch-feedback {
     position: absolute;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background: var(--ripple-color);
-    transform: scale(0);
-    animation: ripple-animation 0.6s linear;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
+    pointer-events: none;
+    animation: ripple-animation 0.6s ease-out forwards;
+    z-index: 10;
 }
 
-@keyframes ripple-animation {
-    to {
-        transform: scale(4);
-        opacity: 0;
+/* Premium Card Style */
+.premium-card {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.2),
+        0 0 20px rgba(255, 0, 110, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Floating Action Button (FAB) Style */
+.fab {
+    position: fixed;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--button-gradient);
+    box-shadow: var(--button-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-speed) var(--transition-bounce);
+    z-index: 100;
+}
+
+.fab:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: var(--button-hover-shadow);
+}
+
+/* Progress Indicator */
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+    stroke: var(--primary-color);
+    fill: transparent;
+    stroke-width: 4;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+/* Tooltip Style */
+.tooltip {
+    position: absolute;
+    background: var(--text-color);
+    color: var(--text-light);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1001;
+}
+
+.tooltip.show {
+    opacity: 1;
+}
+
+/* Mobile-Specific Touch Enhancements */
+@media (hover: none) and (pointer: coarse) {
+    button,
+    .close,
+    .fab {
+        min-width: var(--touch-target);
+        min-height: var(--touch-target);
+    }
+    
+    .close {
+        padding: var(--spacing-sm);
     }
 }
 
-.sparkle {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: var(--sparkle-color);
-    border-radius: 50%;
-    animation: sparkle-animation var(--delay) ease-in-out forwards;
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .floating-name,
+    .settled-name,
+    h1,
+    h2 {
+        filter: contrast(1.5);
+    }
 }
 
-@keyframes sparkle-animation {
-    0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--angle), -100vh) scale(0);
-        opacity: 0;
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

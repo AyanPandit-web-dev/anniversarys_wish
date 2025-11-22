@@ -1,14 +1,58 @@
 :root {
-    --primary-color: #ff6f61; /* Soft coral */
-    --secondary-color: #ffcc00; /* Bright yellow */
-    --accent-color: #ff1493; /* Deep pink */
-    --background-color: #ffffff; /* White */
-    --modal-background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
-    --text-color: #333333; /* Dark gray for text */
-    --heading-color: #222222; /* Darker gray for headings */
-    --button-color: #ff6f61; /* Button color */
-    --button-hover-color: #ff4c3b; /* Darker coral for hover */
-    --font-family: 'Arial', sans-serif; /* Simple and clean font */
-    --border-radius: 8px; /* Rounded corners */
-    --transition-speed: 0.3s; /* Smooth transition speed */
+    /* Vibrant, High-Contrast Color Palette for Mobile */
+    --primary-gradient: linear-gradient(135deg, #FF006E 0%, #FF4D8F 50%, #FF1B8D 100%);
+    --secondary-gradient: linear-gradient(135deg, #8A2BE2 0%, #9D4EDD 50%, #C77DFF 100%);
+    --accent-gradient: linear-gradient(135deg, #FFD700 0%, #FFC700 50%, #FFB700 100%);
+    
+    /* Solid Colors with High Contrast */
+    --primary-color: #FF006E; /* Vibrant Hot Pink */
+    --secondary-color: #8A2BE2; /* Electric Purple */
+    --accent-color: #FFD700; /* Bright Gold */
+    --tertiary-color: #00D9FF; /* Cyan Blue */
+    
+    /* Background Colors - Rich and Vibrant */
+    --background-gradient: linear-gradient(135deg, #1A0033 0%, #2D1B4E 25%, #4A0E4E 50%, #2D1B4E 75%, #1A0033 100%);
+    --card-background: rgba(255, 255, 255, 0.95);
+    --modal-background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 240, 245, 0.98) 100%);
+    
+    /* Text Colors */
+    --text-color: #1A0033; /* Deep Purple */
+    --text-light: #FFFFFF;
+    --heading-color: #FF006E;
+    
+    /* Button Colors */
+    --button-gradient: linear-gradient(135deg, #FF006E 0%, #8A2BE2 100%);
+    --button-hover-gradient: linear-gradient(135deg, #8A2BE2 0%, #FF006E 100%);
+    --button-shadow: 0 8px 25px rgba(255, 0, 110, 0.4);
+    --button-hover-shadow: 0 12px 35px rgba(138, 43, 226, 0.6);
+    
+    /* Sparkle and Effect Colors */
+    --sparkle-color-1: #FFD700;
+    --sparkle-color-2: #FF006E;
+    --sparkle-color-3: #8A2BE2;
+    --sparkle-color-4: #00D9FF;
+    --sparkle-color-5: #FF4D8F;
+    
+    /* Glow Effects */
+    --glow-pink: 0 0 20px rgba(255, 0, 110, 0.8), 0 0 40px rgba(255, 0, 110, 0.4);
+    --glow-purple: 0 0 20px rgba(138, 43, 226, 0.8), 0 0 40px rgba(138, 43, 226, 0.4);
+    --glow-gold: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4);
+    
+    /* Typography */
+    --font-family: 'Poppins', sans-serif;
+    --font-decorative: 'Pacifico', cursive;
+    
+    /* Spacing and Sizing (Mobile-First) */
+    --border-radius: 20px;
+    --border-radius-sm: 12px;
+    --transition-speed: 0.4s;
+    --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Mobile-Optimized Sizes */
+    --touch-target: 48px; /* Minimum touch target size */
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+    --spacing-xl: 48px;
 }

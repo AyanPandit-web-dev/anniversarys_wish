@@ -1,53 +1,96 @@
-:root {
-    --primary-color: #ff6f61; /* Soft coral */
-    --secondary-color: #ffcc00; /* Bright yellow */
-    --accent-color: #ff1493; /* Deep pink */
-    --background-color: #fff5f5; /* Light pink */
-    --text-color: #333; /* Dark gray */
-    --font-family: 'Arial', sans-serif;
-    --border-radius: 12px; /* Rounded corners */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     margin: 0;
     font-family: var(--font-family);
-    background-color: var(--background-color);
-    color: var(--text-color);
+    background: var(--background-gradient);
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+    color: var(--text-light);
     line-height: 1.6;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+@keyframes gradient-shift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 h1, h2, h3 {
     margin: 0;
-    color: var(--primary-color);
+    font-weight: 700;
+}
+
+h1 {
+    font-family: var(--font-decorative);
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    color: var(--text-light);
+    text-shadow: var(--glow-pink);
+    animation: glow-pulse 3s ease-in-out infinite;
 }
 
 h2 {
-    font-size: 2rem;
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 p {
-    margin: 0.5rem 0;
+    margin: var(--spacing-sm) 0;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    font-weight: 300;
+}
+
+.subtitle {
+    font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+    color: var(--text-light);
+    opacity: 0.9;
+    font-weight: 400;
 }
 
 button {
-    background-color: var(--secondary-color);
-    color: #fff;
+    background: var(--button-gradient);
+    color: var(--text-light);
     border: none;
-    padding: 10px 20px;
+    padding: var(--spacing-sm) var(--spacing-lg);
     border-radius: var(--border-radius);
     cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    font-weight: 600;
+    font-family: var(--font-family);
+    transition: all var(--transition-speed) var(--transition-bounce);
+    box-shadow: var(--button-shadow);
+    min-height: var(--touch-target);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-button:hover {
-    background-color: var(--accent-color);
-    transform: scale(1.05);
+button:hover, button:active {
+    background: var(--button-hover-gradient);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: var(--button-hover-shadow);
+}
+
+button:active {
+    transform: scale(0.98);
 }
 
 .modal-overlay {
@@ -56,7 +99,8 @@ button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: linear-gradient(135deg, rgba(26, 0, 51, 0.95) 0%, rgba(74, 14, 78, 0.95) 100%);
+    backdrop-filter: blur(10px);
     opacity: 0;
     transition: opacity 0.5s ease;
     z-index: 999;
@@ -66,31 +110,114 @@ button:hover {
     opacity: 1;
 }
 
-.wish-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    z-index: 1000;
-    max-width: 90%;
-    width: 400px; /* Responsive width */
+.hidden {
+    display: none;
 }
 
-@media (max-width: 600px) {
-    h2 {
-        font-size: 1.5rem;
-    }
+/* Floating Names Styles */
+.floating-names-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
 
-    p {
-        font-size: 1rem;
-    }
+.floating-name {
+    position: absolute;
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    font-family: var(--font-decorative);
+    font-weight: 700;
+    background: linear-gradient(135deg, #FFD700 0%, #FF006E 50%, #8A2BE2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: float-in-air 6s ease-in-out infinite, shimmer 3s linear infinite;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    filter: drop-shadow(0 0 10px rgba(255, 0, 110, 0.6));
+    white-space: nowrap;
+}
 
+.floating-name.name-1 {
+    --float-x: 20vw;
+    --float-y: 15vh;
+    --float-rotate: 5deg;
+    animation-delay: 0s;
+}
+
+.floating-name.name-2 {
+    --float-x: 60vw;
+    --float-y: 60vh;
+    --float-rotate: -8deg;
+    animation-delay: 1s;
+}
+
+.floating-name.settling {
+    animation: settle-down 2s var(--transition-bounce) forwards;
+}
+
+/* Names Destination Container */
+.names-destination {
+    text-align: center;
+    margin: var(--spacing-md) 0;
+    min-height: 80px;
+}
+
+.settled-name {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-family: var(--font-decorative);
+    font-weight: 700;
+    background: linear-gradient(135deg, #FFD700 0%, #FF006E 50%, #8A2BE2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: var(--spacing-xs) 0;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Sparkle Canvas */
+#sparkleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+    
     button {
-        padding: 8px 16px;
-        font-size: 0.9rem;
+        min-width: 200px;
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .floating-name {
+        font-size: clamp(1.2rem, 5vw, 2rem);
+    }
+    
+    .settled-name {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: clamp(2rem, 7vw, 3rem);
+    }
+    
+    button {
+        min-width: 180px;
+        font-size: 1rem;
+        letter-spacing: 1.5px;
     }
 }

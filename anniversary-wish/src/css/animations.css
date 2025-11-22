@@ -1,3 +1,198 @@
+/* Floating Names in Air Animation */
+@keyframes float-in-air {
+    0%, 100% {
+        transform: translate(var(--float-x), var(--float-y)) rotate(var(--float-rotate)) scale(1);
+    }
+    25% {
+        transform: translate(calc(var(--float-x) + 30px), calc(var(--float-y) - 40px)) rotate(calc(var(--float-rotate) + 15deg)) scale(1.05);
+    }
+    50% {
+        transform: translate(calc(var(--float-x) - 20px), calc(var(--float-y) + 30px)) rotate(calc(var(--float-rotate) - 10deg)) scale(0.98);
+    }
+    75% {
+        transform: translate(calc(var(--float-x) + 15px), calc(var(--float-y) - 20px)) rotate(calc(var(--float-rotate) + 8deg)) scale(1.02);
+    }
+}
+
+/* Names Settling Down Animation */
+@keyframes settle-down {
+    0% {
+        transform: translate(var(--float-x), var(--float-y)) rotate(var(--float-rotate)) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(calc(var(--settle-x) * 0.5), calc(var(--settle-y) * 0.5)) rotate(0deg) scale(1.3);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Sparkle Trail During Settlement */
+@keyframes sparkle-trail {
+    0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(var(--sparkle-x), var(--sparkle-y)) scale(1.5);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(calc(var(--sparkle-x) * 2), calc(var(--sparkle-y) * 2)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Glowing Text Animation */
+@keyframes glow-pulse {
+    0%, 100% {
+        text-shadow: var(--glow-pink);
+    }
+    33% {
+        text-shadow: var(--glow-purple);
+    }
+    66% {
+        text-shadow: var(--glow-gold);
+    }
+}
+
+/* Button Shine Effect */
+@keyframes button-shine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 200%;
+    }
+}
+
+/* Hearts Floating Background */
+@keyframes hearts-float {
+    0% {
+        transform: translateY(100vh) rotate(0deg) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(720deg) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Modal Entry Animation */
+@keyframes modal-bounce-in {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1) rotate(5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* Enhanced Sparkle Animation */
+@keyframes enhanced-sparkle {
+    0% {
+        transform: translate(0, 0) scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    25% {
+        transform: translate(var(--dx1), var(--dy1)) scale(1.5) rotate(90deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(var(--dx2), var(--dy2)) scale(1) rotate(180deg);
+        opacity: 0.8;
+    }
+    75% {
+        transform: translate(var(--dx3), var(--dy3)) scale(1.2) rotate(270deg);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translate(var(--dx4), var(--dy4)) scale(0) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Rainbow Border Animation */
+@keyframes rainbow-border {
+    0% {
+        border-color: #FF006E;
+        box-shadow: 0 0 20px rgba(255, 0, 110, 0.6);
+    }
+    33% {
+        border-color: #8A2BE2;
+        box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+    }
+    66% {
+        border-color: #FFD700;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    }
+    100% {
+        border-color: #FF006E;
+        box-shadow: 0 0 20px rgba(255, 0, 110, 0.6);
+    }
+}
+
+/* Shimmer Text Effect */
+@keyframes shimmer {
+    0% {
+        background-position: -200%;
+    }
+    100% {
+        background-position: 200%;
+    }
+}
+
+/* Pulsing Heart Animation */
+@keyframes pulse-heart {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+}
+
+/* Confetti Burst */
+@keyframes confetti-burst {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--conf-x), var(--conf-y)) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Fade In Animation */
+.modal-overlay {
+    animation: fade-in 0.5s ease forwards;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Legacy Support - Keep for Compatibility */
 @keyframes float-up {
     0% {
         transform: translateY(0) rotate(0deg) scale(0.8);
@@ -21,30 +216,8 @@
     }
 }
 
-@keyframes shimmer {
-    0% {
-        background-position: -200%;
-    }
-    100% {
-        background-position: 200%;
-    }
-}
-
-.modal-overlay {
-    animation: fade-in 0.5s ease forwards;
-}
-
-@keyframes fade-in {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 0.7;
-    }
-}
-
 .modal {
-    animation: slide-in 0.5s ease forwards;
+    animation: modal-bounce-in 0.6s var(--transition-bounce) forwards;
 }
 
 @keyframes slide-in {
@@ -59,7 +232,7 @@
 }
 
 .sparkle {
-    animation: sparkle-animation 1s ease forwards;
+    animation: enhanced-sparkle 1.5s ease-out forwards;
 }
 
 @keyframes sparkle-animation {

@@ -1,117 +1,217 @@
-:root {
-    --primary-color: #ff6f61; /* Soft coral */
-    --secondary-color: #ffcc00; /* Bright yellow */
-    --background-color: #f9f9f9; /* Light background */
-    --text-color: #333; /* Dark text for readability */
-    --modal-background: rgba(255, 255, 255, 0.9); /* Semi-transparent modal */
-    --button-color: #ff6f61; /* Button color */
-    --button-hover-color: #ff4c3b; /* Darker shade for hover */
-    --shadow-color: rgba(0, 0, 0, 0.1); /* Soft shadow */
-}
-
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    padding: var(--spacing-md);
+    position: relative;
 }
 
-h2 {
-    font-size: 2.5rem;
+.container {
+    width: 100%;
+    max-width: 600px;
     text-align: center;
-    margin: 0;
-    color: var(--primary-color);
+    z-index: 10;
+    position: relative;
 }
 
-p {
-    font-size: 1.2rem;
-    text-align: center;
-    margin: 0.5rem 0;
+header {
+    margin-bottom: var(--spacing-xl);
+    position: relative;
 }
 
-.modal-overlay {
+.hearts-animation {
+    font-size: clamp(3rem, 10vw, 5rem);
+    animation: pulse-heart 2s ease-in-out infinite;
+    display: inline-block;
+    margin-bottom: var(--spacing-md);
+    filter: drop-shadow(0 0 20px rgba(255, 0, 110, 0.8));
+}
+
+.glowing-text {
+    margin: var(--spacing-sm) 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+/* Enhanced Button Styling */
+.wish-button {
+    position: relative;
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+    border: 3px solid transparent;
+    animation: rainbow-border 3s linear infinite;
+    backdrop-filter: blur(10px);
+}
+
+.wish-button .button-text {
+    position: relative;
+    z-index: 2;
+}
+
+.wish-button .button-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: button-shine 3s ease-in-out infinite;
+}
+
+/* Modal Styling */
+.modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    z-index: 1000;
+    padding: var(--spacing-md);
 }
 
-.modal-overlay.show {
-    opacity: 1;
+.modal-content {
+    background: var(--modal-background);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(255, 0, 110, 0.4), 0 0 40px rgba(138, 43, 226, 0.3);
+    position: relative;
+    border: 3px solid transparent;
+    animation: rainbow-border 3s linear infinite;
+    transform-origin: center;
 }
 
-.wish-modal {
-    background-color: var(--modal-background);
-    border-radius: 10px;
-    box-shadow: 0 4px 20px var(--shadow-color);
-    padding: 20px;
-    max-width: 90%;
-    width: 400px;
-    text-align: center;
-    transform: scale(0.9);
-    transition: transform 0.3s ease, opacity 0.3s ease;
+.modal-title {
+    margin-bottom: var(--spacing-lg);
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
 }
 
-.wish-modal.show {
-    transform: scale(1);
-    opacity: 1;
+.wish-content {
+    margin: var(--spacing-lg) 0;
 }
 
-button {
-    background-color: var(--button-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+.wish-text {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    color: var(--text-color);
+    margin: var(--spacing-sm) 0;
+    line-height: 1.8;
 }
 
-button:hover {
-    background-color: var(--button-hover-color);
-    transform: scale(1.05);
+.wish-highlight {
+    font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+    font-weight: 600;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: var(--spacing-md) 0;
+    animation: glow-pulse 2s ease-in-out infinite;
 }
 
-.btn-ripple {
+.hearts-row {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin: var(--spacing-md) 0;
+    animation: pulse-heart 1.5s ease-in-out infinite;
+}
+
+.close {
     position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    line-height: 1;
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.6);
-    transform: scale(0);
-    animation: ripple-animation 0.6s linear;
+    background: rgba(255, 0, 110, 0.1);
 }
 
-@keyframes ripple-animation {
-    to {
-        transform: scale(4);
-        opacity: 0;
+.close:hover {
+    transform: rotate(90deg) scale(1.2);
+    background: rgba(255, 0, 110, 0.2);
+    text-shadow: var(--glow-pink);
+}
+
+.modal-action {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-xl);
+    font-size: clamp(1rem, 4vw, 1.1rem);
+    background: var(--button-gradient);
+    min-width: 150px;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    body {
+        padding: var(--spacing-sm);
+    }
+    
+    .container {
+        max-width: 100%;
+    }
+    
+    .modal-content {
+        padding: var(--spacing-lg);
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .wish-button {
+        width: 100%;
+        max-width: 300px;
     }
 }
 
-@media (max-width: 600px) {
-    h2 {
+@media (max-width: 480px) {
+    .modal-content {
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-sm);
+    }
+    
+    .close {
+        top: var(--spacing-sm);
+        right: var(--spacing-sm);
         font-size: 2rem;
+        min-width: 40px;
+        min-height: 40px;
     }
+}
 
-    p {
-        font-size: 1rem;
+/* Landscape Mobile Optimization */
+@media (max-height: 600px) and (orientation: landscape) {
+    body {
+        padding: var(--spacing-sm);
     }
-
-    button {
-        padding: 8px 16px;
-        font-size: 0.9rem;
+    
+    header {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .hearts-animation {
+        font-size: 2rem;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .modal-content {
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: var(--spacing-md);
     }
 }
