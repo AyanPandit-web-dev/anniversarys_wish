@@ -1,0 +1,14 @@
+:root {
+    --primary-color: #ff6f61; /* Soft coral */
+    --secondary-color: #ffcc00; /* Bright yellow */
+    --accent-color: #ff1493; /* Deep pink */
+    --background-color: #ffffff; /* White */
+    --modal-background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    --text-color: #333333; /* Dark gray for text */
+    --heading-color: #222222; /* Darker gray for headings */
+    --button-color: #ff6f61; /* Button color */
+    --button-hover-color: #ff4c3b; /* Darker coral for hover */
+    --font-family: 'Arial', sans-serif; /* Simple and clean font */
+    --border-radius: 8px; /* Rounded corners */
+    --transition-speed: 0.3s; /* Smooth transition speed */
+}

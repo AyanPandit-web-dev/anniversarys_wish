@@ -1,0 +1,117 @@
+:root {
+    --primary-color: #ff6f61; /* Soft coral */
+    --secondary-color: #ffcc00; /* Bright yellow */
+    --background-color: #f9f9f9; /* Light background */
+    --text-color: #333; /* Dark text for readability */
+    --modal-background: rgba(255, 255, 255, 0.9); /* Semi-transparent modal */
+    --button-color: #ff6f61; /* Button color */
+    --button-hover-color: #ff4c3b; /* Darker shade for hover */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 0;
+    color: var(--primary-color);
+}
+
+p {
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.modal-overlay.show {
+    opacity: 1;
+}
+
+.wish-modal {
+    background-color: var(--modal-background);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    padding: 20px;
+    max-width: 90%;
+    width: 400px;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.wish-modal.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--button-hover-color);
+    transform: scale(1.05);
+}
+
+.btn-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    h2 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}

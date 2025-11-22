@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anniversary Wishes</title>
+    <link rel="stylesheet" href="src/css/variables.css">
+    <link rel="stylesheet" href="src/css/base.css">
+    <link rel="stylesheet" href="src/css/layout.css">
+    <link rel="stylesheet" href="src/css/components.css">
+    <link rel="stylesheet" href="src/css/animations.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Celebrate Love</h1>
+            <p>Wishing you endless joy.</p>
+        </header>
+        <main>
+            <button id="wishBtn">Send Wishes</button>
+            <div id="wishModal" class="modal hidden">
+                <div class="modal-content">
+                    <span id="closeBtn" class="close">&times;</span>
+                    <h2>Happy Anniversary!</h2>
+                    <p>May your love shine brighter.</p>
+                    <p>Cheers to many more years!</p>
+                    <button class="modal-action">Thank You</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="src/js/vendors/canvas-confetti.min.js"></script>
+    <script src="src/js/script.js"></script>
+</body>
+</html>

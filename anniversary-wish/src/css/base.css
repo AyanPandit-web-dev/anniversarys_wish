@@ -1,0 +1,96 @@
+:root {
+    --primary-color: #ff6f61; /* Soft coral */
+    --secondary-color: #ffcc00; /* Bright yellow */
+    --accent-color: #ff1493; /* Deep pink */
+    --background-color: #fff5f5; /* Light pink */
+    --text-color: #333; /* Dark gray */
+    --font-family: 'Arial', sans-serif;
+    --border-radius: 12px; /* Rounded corners */
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+h1, h2, h3 {
+    margin: 0;
+    color: var(--primary-color);
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+p {
+    margin: 0.5rem 0;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+button {
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 999;
+}
+
+.modal-overlay.show {
+    opacity: 1;
+}
+
+.wish-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 1000;
+    max-width: 90%;
+    width: 400px; /* Responsive width */
+}
+
+@media (max-width: 600px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
